@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Himel — Web Developer</title>
+<link rel="icon" href="profile.jpg" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+  :root{
+    --bg1:#0b1220; --bg2:#0f172a; --accent:#38bdf8; --soft:#94a3b8;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#fff;scroll-behavior:smooth}
+  /* container */
+  .wrap{max-width:1100px;margin:0 auto;padding:120px 28px 80px}
+  header{
+    position:fixed;left:0;top:12px;right:0;margin:auto;max-width:1100px;display:flex;align-items:center;justify-content:space-between;padding:10px 22px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);backdrop-filter: blur(6px);border-radius:12px;border:1px solid rgba(255,255,255,0.04);z-index:60;
+  }
+  /* logo */
+  .logo{
+    display:flex;align-items:center;gap:12px;
+  }
+  .logo-img{
+    width:56px;height:56px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.06);box-shadow:0 6px 20px rgba(0,0,0,0.6);
+    transform-origin:center;animation:float 6s ease-in-out infinite;
+  }
+  .logo-img img{width:100%;height:100%;object-fit:cover;display:block}
+  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+
+  nav a{color:#e6eef8;text-decoration:none;margin-left:18px;font-weight:600;opacity:.95}
+  nav a:hover{color:var(--accent);transform:translateY(-2px);transition:.25s}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center;padding-top:50px}
+  .intro h1{font-size:2.6rem;margin:0 0 14px;line-height:1.05}
+  .intro h1 .name{color:var(--accent)}
+  .typewriter{display:inline-block;color:var(--accent);border-right:2px solid rgba(56,189,248,0.9);padding-right:6px;white-space:nowrap;overflow:hidden}
+  .sub{color:var(--soft);max-width:70%;margin-bottom:18px}
+  .cta{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}
+  .btn{background:var(--accent);color:var(--bg2);padding:10px 18px;border-radius:999px;border:none;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(56,189,248,0.12);transition:transform .2s,box-shadow .2s}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff}
+  .btn:hover{transform:translateY(-6px)}
+
+  /* profile card (right) */
+  .profile-card{position:relative;padding:22px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 10px 40px rgba(2,6,23,0.6);display:flex;flex-direction:column;align-items:center}
+  .profile-avatar{width:160px;height:160px;border-radius:50%;overflow:hidden;border:3px solid rgba(56,189,248,0.12);box-shadow:0 14px 40px rgba(2,6,23,0.6)}
+  .profile-avatar img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;transform-origin:center}
+  .profile-avatar:hover img{transform:scale(1.04) rotate(-1.5deg)}
+  .role{margin-top:12px;color:var(--soft);font-weight:600}
+  .pulse{position:absolute;left:22px;top:-36px;width:180px;height:180px;border-radius:50%;filter:blur(30px);opacity:.12;background:linear-gradient(45deg,var(--accent),#7c3aed);animation:pulse 3.5s infinite}
+  @keyframes pulse{0%{transform:scale(.9)}50%{transform:scale(1.05)}100%{transform:scale(.9)}}
+
+  /* features / about */
+  .section{margin-top:70px}
+  .section h2{display:flex;align-items:center;gap:10px;color:var(--accent);margin-bottom:16px}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.017),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);transition:transform .35s,box-shadow .35s}
+  .card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+  .small{color:var(--soft);font-size:.95rem}
+
+  /* skills */
+  .skills-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
+  .skill{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
+  .skill .label{font-weight:600}
+  .bar{width:48%;height:10px;background:rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;position:relative}
+  .bar .progress{height:100%;background:linear-gradient(90deg,var(--accent),#7c3aed);width:0%;transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+
+  /* services */
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:12px}
+  .service{padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.04);transform-style:preserve-3d;transition:transform .35s}
+  .service:hover{transform:translateY(-14px) rotateX(6deg) rotateY(-5deg)}
+  .service h3{margin-top:6px;margin-bottom:8px;color:var(--accent)}
+  .service p{color:var(--soft);font-size:.95rem}
+
+  /* contact */
+  .contact-box{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(56,189,248,0.03),transparent);border:1px solid rgba(56,189,248,0.06);margin-top:12px}
+  .contact-box .mail{font-weight:700;color:var(--bg2);background:#fff;padding:8px 12px;border-radius:8px}
+  .socials{display:flex;gap:10px}
+
+  /* cursor follower */
+  .cursor{
+    position:fixed;left:0;top:0;width:18px;height:18px;border-radius:50%;pointer-events:none;mix-blend-mode:screen;z-index:9999;border:2px solid rgba(56,189,248,0.9);transform:translate(-50%,-50%);transition:transform .08s ease;
+  }
+  .cursor.big{width:48px;height:48px;border-radius:50%;opacity:.12;background:linear-gradient(90deg,var(--accent),#7c3aed);border:0}
+
+  /* footer */
+  footer{margin-top:60px;padding:40px;text-align:center;color:var(--soft);font-size:.95rem;border-top:1px solid rgba(255,255,255,0.02)}
+
+  /* responsive */
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;gap:18px}
+    .intro h1{font-size:2rem}
+    .profile-card{order:-1}
+    header{left:12px;right:12px}
+    .wrap{padding-top:100px}
+  }
+</style>
+</head>
+<body>
+  <!-- canvas particles -->
+  <canvas id="particles" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
+
+  <div class="cursor" id="cursor"></div>
+
+  <header>
+    <div class="logo">
+      <div class="logo-img" id="logoTilt">
+        <!-- save your profile image as profile.jpg in same folder -->
+        <img src="profile.png" alt="Himel">
+      </div>
+      <div>
+        <div style="font-weight:700;color:#eaf6ff">Himel.dev</div>
+        <div style="font-size:.82rem;color:var(--soft)">Web Developer • Bangladesh</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="home">
+    <section class="hero" aria-label="hero">
+      <div class="intro">
+        <h1>Hi, I'm <span class="name">Himel</span> — <span class="typewriter" id="typewriter">Expert Web Developer</span></h1>
+        <p class="sub">I craft fast, responsive and animated websites using modern tools — HTML, CSS, JavaScript, React and Node. I focus on UI/UX, performance and clean code. Let's create amazing products together.</p>
+        <div class="cta">
+          <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
+          <a class="btn secondary" href="#services">See Services</a>
+        </div>
+      </div>
+
+      <aside class="profile-card" style="z-index:10">
+        <div class="pulse"></div>
+        <div class="profile-avatar" id="avatarTilt">
+          <img src="profile.png" alt="Himel profile">
+        </div>
+        <div class="role">Full-Stack Web Developer</div>
+        <div style="margin-top:12px;color:var(--soft);text-align:center">25 • Bangladesh • Fast delivery • 24/7 Support</div>
+      </aside>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <div class="card reveal">
+          <p class="small">I'm Himel — a passionate developer building user-friendly and animated web experiences. I love turning ideas into fast, accessible websites. I specialize in modern front-end frameworks, smooth animations and backend APIs.</p>
+          <ul style="margin-top:12px;color:var(--soft);line-height:1.8">
+            <li>✅ Responsive & accessible websites</li>
+            <li>✅ Rich UI / UX with micro-interactions</li>
+            <li>✅ Performance & SEO friendly</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 style="color:var(--accent)">Quick Stats</h3>
+          <p class="small">Completed projects · 30+ &nbsp; •  Clients satisfied · 28+ &nbsp; •  Avg. delivery 3–7 days</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+      <div class="card">
+        <div class="skills-grid">
+          <div class="skill reveal">
+            <div class="label">HTML & CSS</div>
+            <div class="bar"><div class="progress" data-value="95"></div></div>
+          </div>
+          <div class="skill reveal">
+            <div class="label">JavaScript / React</div>
+            <div class="bar"><div class="progress" data-value="90"></div></div>
+          </div>
+          <div class="skill reveal">
+            <div class="label">Node.js / API</div>
+            <div class="bar"><div class="progress" data-value="82"></div></div>
+          </div>
+          <div class="skill reveal">
+            <div class="label">Animation / UI</div>
+            <div class="bar"><div class="progress" data-value="92"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <h2>Services</h2>
+      <div class="services">
+        <div class="service reveal">
+          <div style="font-size:1.6rem">🌐</div>
+          <h3>Responsive Websites</h3>
+          <p>Pixel-perfect responsive websites with fast load time and SEO basics.</p>
+        </div>
+        <div class="service reveal">
+          <div style="font-size:1.6rem">⚡</div>
+          <h3>Animations & UI</h3>
+          <p>Micro-interactions, typewriters, scroll reveals, and rich animations.</p>
+        </div>
+        <div class="service reveal">
+          <div style="font-size:1.6rem">🔌</div>
+          <h3>Backend & APIs</h3>
+          <p>Node.js/Express APIs, database design, and 3rd-party integrations.</p>
+        </div>
+        <div class="service reveal">
+          <div style="font-size:1.6rem">🛠️</div>
+          <h3>WordPress & CMS</h3>
+          <p>Custom themes, performance tuning and deployment.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="contact-box">
+        <div>
+          <div style="font-weight:700">Ready to start?</div>
+          <div class="small" style="margin-top:6px;color:var(--soft)">Email me directly for project quotes or quick chats.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <a class="mail" href="mailto:himelgamer941@gmail.com">himelgamer941@gmail.com</a>
+          <div class="socials">
+            <a aria-label="GitHub" href="#" style="color:var(--soft);text-decoration:none">GitHub</a>
+            <a aria-label="Fiverr" href="#" style="color:var(--soft);text-decoration:none">Fiverr</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Himel • Built with ❤️ • <span style="color:var(--soft)">Fast delivery • 24/7 support</span>
+    </footer>
+  </main>
+
+<script>
+/* ========== TYPEWRITER (multiple phrases) ========== */
+const phrases = ["Expert Web Developer","Front-end & Full-stack","Animation Lover","Fast & Reliable"];
+let idxPhrase = 0, idxChar = 0, forward = true;
+const tw = document.getElementById('typewriter');
+function typeTick(){
+  const text = phrases[idxPhrase];
+  if(forward){
+    idxChar++;
+    tw.textContent = text.slice(0, idxChar);
+    if(idxChar === text.length){ forward = false; setTimeout(typeTick,1000); return }
+  } else {
+    idxChar--;
+    tw.textContent = text.slice(0, idxChar);
+    if(idxChar === 0){ forward = true; idxPhrase = (idxPhrase+1)%phrases.length; }
+  }
+  setTimeout(typeTick, forward?90:40);
+}
+typeTick();
+
+/* ========== PARTICLES CANVAS ========== */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w=canvas.width=innerWidth, h=canvas.height=innerHeight;
+window.addEventListener('resize',()=>{w=canvas.width=innerWidth;h=canvas.height=innerHeight;initParticles()})
+let particles=[];
+function initParticles(){
+  particles = [];
+  const count = Math.round((w*h)/60000);
+  for(let i=0;i<count;i++){
+    particles.push({
+      x:Math.random()*w, y:Math.random()*h,
+      r: Math.random()*2+0.4,
+      vx:(Math.random()-0.5)*0.2, vy:(Math.random()-0.5)*0.2,
+      alpha: Math.random()*0.6+0.05
+    })
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(let p of particles){
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=w; if(p.x>w) p.x=0;
+    if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(56,189,248,"+p.alpha+")";
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+initParticles(); draw();
+
+/* ========== REVEAL ON SCROLL & SKILL BARS ========== */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.transform = 'translateY(0)'; entry.target.style.opacity=1;
+      entry.target.classList.add('revealed');
+      if(entry.target.querySelectorAll('.progress').length){
+        entry.target.querySelectorAll('.progress').forEach(p=>{
+          p.style.width = p.dataset.value + '%';
+        })
+      }
+    } else {
+      // optional: hide when out of view
+    }
+  })
+},{threshold:0.18});
+reveals.forEach(r=>{
+  r.style.opacity=0; r.style.transform='translateY(20px)'; r.style.transition='all .8s cubic-bezier(.2,.9,.2,1)';
+  observer.observe(r);
+});
+
+/* ========== LOGO & AVATAR TILT MOUSE INTERACTION ========== */
+function addTilt(el, strength=12){
+  el.addEventListener('mousemove', e=>{
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `rotateX(${(-y*strength).toFixed(2)}deg) rotateY(${(x*strength).toFixed(2)}deg) translateZ(6px)`;
+  });
+  el.addEventListener('mouseleave', ()=> el.style.transform = 'rotateX(0) rotateY(0) translateZ(0)');
+}
+addTilt(document.getElementById('logoTilt'),8);
+addTilt(document.getElementById('avatarTilt'),8);
+
+/* ========== CUSTOM CURSOR ========== */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e=>{
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+const bigElements = document.querySelectorAll('a, .btn, .service, .profile-avatar, nav a');
+bigElements.forEach(el=>{
+  el.addEventListener('mouseenter', ()=> cursor.classList.add('big'));
+  el.addEventListener('mouseleave', ()=> cursor.classList.remove('big'));
+});
+
+/* ========== SUBTLE SCROLL PARALLAX FOR PROFILE CARD ========== */
+const profile = document.querySelector('.profile-card');
+window.addEventListener('scroll', ()=>{
+  const sc = window.scrollY;
+  profile.style.transform = `translateY(${Math.min(0, sc*-0.02)}px)`;
+});
+
+/* ========== accessibility: reduce motion check ========== */
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){
+  document.querySelectorAll('*').forEach(el=>el.style.animation='none');
+}
+</script>
+</body>
+</html>
